@@ -54,16 +54,16 @@ function make_camera(x, y)
 	cam.y = y
 
 	function follow_player()
-	local bounds = 12
+	local bounds = 32
     local offset = 64
     --right bounds
     if (player.x+player.w-offset > cam.x + bounds) then cam.x = flr(player.x) + player.w - offset - bounds end
     --left bounds
     if (player.x-offset < cam.x - bounds) then cam.x = flr(player.x) - offset + bounds end
     --lower bounds
-    if (player.y+player.h-offset > bounds + cam.y) then cam.y = flr(player.y) + player.h - offset - bounds end
+    if (player.y+player.h-offset > cam.y + bounds/2) then cam.y = flr(player.y) + player.h - offset - bounds/2 end
     --upper bounds
-    if (player.y-offset < cam.y - bounds) then cam.y = flr(player.y) - offset + bounds end
+    if (player.y-offset < cam.y - bounds/2) then cam.y = flr(player.y) - offset + bounds/2 end
 	end
 
 	function cam.draw_camera()
