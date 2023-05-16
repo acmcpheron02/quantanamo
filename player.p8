@@ -46,7 +46,7 @@ function move_player(player)
 end
 
 function calc_forces(player)
-	player.vy += .21 --gravity
+	player.vy += .20 --gravity
 	player.vx /= 1.05 --air friction
 	
 	if player.vx < 0.01 and player.vx > -0.01 then player.vx = 0 end
