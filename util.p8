@@ -61,9 +61,9 @@ function make_camera(x, y)
     --left bounds
     if (player.x-offset < cam.x - bounds) then cam.x = flr(player.x) - offset + bounds end
     --lower bounds
-    if (player.y+player.h-offset > cam.y + bounds/2) then cam.y = flr(player.y) + player.h - offset - bounds/2 end
+    if (player.y+player.h-offset > cam.y + bounds/1.5) then cam.y = flr(player.y) + player.h - offset - bounds/1.5 end
     --upper bounds
-    if (player.y-offset < cam.y - bounds/2) then cam.y = flr(player.y) - offset + bounds/2 end
+    if (player.y-offset < cam.y - bounds/1.5) then cam.y = flr(player.y) - offset + bounds/1.5 end
 	end
 
 	function cam.draw_camera()

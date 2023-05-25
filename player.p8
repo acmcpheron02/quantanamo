@@ -38,7 +38,7 @@ function make_player(x,y)
 		print(tailRot, cam.x + 8, cam.y + 8)
 		print(player.vx, cam.x + 8, cam.y + 16)
 		print(player.dx, cam.x + 8, cam.y + 24)
-		pd_rotate(player.x+8, player.y+11, tailRot, 2.5, 31, 4, false, 1)
+		pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1)
 
 		--body controls --80, 30
 		if player.direction == 'neutral' and player.state == 'float' then
@@ -109,19 +109,21 @@ function update_p_state()
 		player.state = 'float'
 	end
 	if player.state == 'float' and x_btn.is_down == true then
-		player.state = 'launch'
+		player.state = 'launch' 
 	end
-	if player.vy > 0 then
-		player.direction = 'neutral'
+	if player.vy < 0 then player.direction = 'up' end
+	if player.vy > 0 then player.direction = 'neutral' end
+
+	if player.dx > 0 then
+		player.xflipped = true
+		if player.vx > 0 then player.direction = 'side' end
 	end
-	if player.dx != 0 then --abs(player.vx) > 0.20 and 
-		player.direction = 'side'
+	if player.dx < 0 then
+		player.xflipped = false
+		if player.vx < 0 then player.direction = 'side' end
 	end
-	if player.vx > 0.25 then player.xflipped = true end
-	if player.vx < -0.25 then player.xflipped = false end
-	if player.vy < 0 then
-		player.direction = 'up'
-	end
+	--If player is moving in the direction pressed, set flipped accordingly and direction = side
+	--If player is changing directions (dx is opposite of vx) then set to neutral.
 end
 
 
