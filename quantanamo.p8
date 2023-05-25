@@ -33,9 +33,6 @@ function _draw()
 
 	sspr(0, 16, 10, 10, 90, 60)
 
-	-- sspr(40, 0, 8, 8, flr(player.x)+24, flr(player.y)+18) --84, 44
-	-- sspr(40, 16, 16, 16, flr(player.x)+20, flr(player.y)+7) --80, 30
-	-- sspr(48, 8, 8, 8, flr(player.x)+25, flr(player.y), 8, 8, true) --84, 26
 
 	pd_rotate(80, 110, rot, 2.5, 10, 10, false, 1)
 

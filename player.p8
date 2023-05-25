@@ -32,7 +32,13 @@ function make_player(x,y)
 
 	function player.draw()
 		--tail controls --84, 44
-		sspr(41, 4, 6, 12, player.x+5, player.y+13, 6, 12, false) 
+		--sspr(41, 4, 6, 12, player.x+5, player.y+13, 6, 12, false)
+		local tailRot
+		tailRot = (player.vx * 20) / 360
+		print(tailRot, cam.x + 8, cam.y + 8)
+		print(player.vx, cam.x + 8, cam.y + 16)
+		print(player.dx, cam.x + 8, cam.y + 24)
+		pd_rotate(player.x+8, player.y+11, tailRot, 2.5, 31, 4, false, 1)
 
 		--body controls --80, 30
 		if player.direction == 'neutral' and player.state == 'float' then
@@ -45,13 +51,15 @@ function make_player(x,y)
 			sspr(40, 16, 16, 16, player.x, player.y+7) 
 		end
 
-
 		--head controls --84, 26
+		local headxFlip = false
+		if player.dx < 0 then headxflip = false end
+		if player.dx > 0 then headxflip = true end
 		if player.direction == 'side' or player.direction =='neutral' then
-			sspr(48, 0, 8, 8, player.x+4, player.y, 8, 8, player.xflipped)
+			sspr(48, 0, 8, 8, player.x+4, player.y, 8, 8, headxflip)
 		end
 		if player.direction == 'up' then
-			sspr(48, 8, 8, 8, player.x+4, player.y, 8, 8, player.xflipped)
+			sspr(48, 8, 8, 8, player.x+4, player.y, 8, 8, headxflip)
 		end
 	end
 
@@ -61,7 +69,7 @@ end
 function move_player()
 	player.dx = direction_control()
 	if player.state == 'float' then
-		player.vx += player.dx/10
+		player.vx += player.dx/15
 	end
 	if player.state == 'launch' then
 		player.vx += player.dx/50
@@ -73,7 +81,7 @@ function move_player()
 end
 
 function calc_forces()
-	player.vx /= 1.05 --air friction
+	player.vx /= 1.02 --air friction
 	
 	--adjust to 0 when near 0
 	if player.vx < 0.01 and player.vx > -0.01 then player.vx = 0 end
@@ -103,18 +111,17 @@ function update_p_state()
 	if player.state == 'float' and x_btn.is_down == true then
 		player.state = 'launch'
 	end
-	if player.vy < 0 then
-		player.direction = 'up'
-	end
 	if player.vy > 0 then
 		player.direction = 'neutral'
 	end
-	if abs(player.vx) > 0.65 then
+	if player.dx != 0 then --abs(player.vx) > 0.20 and 
 		player.direction = 'side'
 	end
-
-	if player.dx < 0 then player.xflipped = false end
-	if player.dx > 0 then player.xflipped = true end
+	if player.vx > 0.25 then player.xflipped = true end
+	if player.vx < -0.25 then player.xflipped = false end
+	if player.vy < 0 then
+		player.direction = 'up'
+	end
 end
 
 
