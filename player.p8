@@ -121,9 +121,8 @@ function update_p_state()
 	if player.state == 'float' and x_btn.is_down == true then
 		player.state = 'launch' 
 	end
-	if player.vy < 0 then player.direction = 'up' end
 	if player.vy > 0 then player.direction = 'neutral' end
-
+	
 	if player.dx > 0 then
 		player.xflipped = true
 		if player.vx > 0 then player.direction = 'side' end
@@ -132,6 +131,7 @@ function update_p_state()
 		player.xflipped = false
 		if player.vx < 0 then player.direction = 'side' end
 	end
+	if player.vy < 0 then player.direction = 'up' end
 	--If player is moving in the direction pressed, set flipped accordingly and direction = side
 	--If player is changing directions (dx is opposite of vx) then set to neutral.
 end
