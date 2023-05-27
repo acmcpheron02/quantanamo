@@ -14,6 +14,7 @@ function make_player(x,y)
 	player.xflipped = false
 	player.state = 'float'
 	player.direction = 'side'
+	player.cooldown = 0
 
 	function player.xcen() 
 		return player.x + 8
@@ -35,10 +36,12 @@ function make_player(x,y)
 		--sspr(41, 4, 6, 12, player.x+5, player.y+13, 6, 12, false)
 		local tailRot
 		tailRot = (player.vx * 20) / 360
-		print(tailRot, cam.x + 8, cam.y + 8)
-		print(player.vx, cam.x + 8, cam.y + 16)
-		print(player.dx, cam.x + 8, cam.y + 24)
-		pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1)
+		if player.state != 'hold' then
+			print(tailRot, cam.x + 8, cam.y + 8)
+			print(player.vx, cam.x + 8, cam.y + 16)
+			print(player.dx, cam.x + 8, cam.y + 24)
+			pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1)
+		end
 
 		--body controls --80, 30
 		if player.direction == 'neutral' and player.state == 'float' then
@@ -50,16 +53,21 @@ function make_player(x,y)
 		if player.state == 'launch' then
 			sspr(40, 16, 16, 16, player.x, player.y+7) 
 		end
+		if player.state == 'hold' then
+			pd_rotate(player.x+8, player.y+8, rot, 2.5, 10, 10, false, 1)
+		end
 
 		--head controls --84, 26
 		local headxFlip = false
 		if player.dx < 0 then headxflip = false end
 		if player.dx > 0 then headxflip = true end
-		if player.direction == 'side' or player.direction =='neutral' then
-			sspr(48, 0, 8, 8, player.x+4, player.y, 8, 8, headxflip)
-		end
-		if player.direction == 'up' then
-			sspr(48, 8, 8, 8, player.x+4, player.y, 8, 8, headxflip)
+		if player.state != 'hold' then
+			if player.direction == 'side' or player.direction =='neutral' then
+				sspr(48, 0, 8, 8, player.x+4, player.y, 8, 8, headxflip)
+			end
+			if player.direction == 'up' then
+				sspr(48, 8, 8, 8, player.x+4, player.y, 8, 8, headxflip)
+			end
 		end
 	end
 
@@ -105,6 +113,8 @@ function apply_forces()
 end
 
 function update_p_state()
+	if player.cooldown > 0 then player.cooldown -= 1 end
+
 	if player.state == 'launch' and player.vy > 0 then
 		player.state = 'float'
 	end

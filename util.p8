@@ -70,3 +70,35 @@ function make_camera(x, y)
 		camera(cam.x, cam.y)
 	end
 end
+
+
+function collisions()
+	for w in all(wells) do
+	 well_collide(w)
+	end
+  end
+  
+  function well_collide(w)
+	xdist = w.xcen() - player.xcen()
+	ydist = w.ycen() - player.ycen()
+	collide = false
+	colldist = sqrt(xdist * 0x0.0001 * xdist + ydist * 0x0.0001 * ydist) * 0x100
+	if colldist <= 16 then
+		hold_well(w)
+	end
+	if colldist > 16 and colldist < 50 then
+		player.vx += sgn(xdist) * 0.1 
+		player.vy += sgn(ydist) * 0.1
+	end
+end
+  
+--   function collide_event(a1, a2)
+-- 	if(a1.kind=="player") and (a2.kind!="player") and a1.hurt == 0 then
+-- 	  if a1.mass >= a2.eatreq then
+-- 		attach(a1,a2)
+-- 	  end
+-- 	  if a1.mass < a2.eatreq then
+-- 		a1.damage()
+-- 	  end
+-- 	end
+--   end
