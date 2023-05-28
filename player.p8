@@ -82,10 +82,10 @@ function move_player()
 	if player.state == 'launch' then
 		player.vx += player.dx/50
 	end
-	if x_btn.is_pressed == true then
-		player.vy -= 8.5
-		player.state = 'launch'
-	end
+	-- if x_btn.is_pressed == true then
+	-- 	player.vy -= 8.5
+	-- 	player.state = 'launch'
+	-- end
 end
 
 function calc_forces()
@@ -96,13 +96,13 @@ function calc_forces()
 	
 	--if floating, reduce maximum gravity effect 
 	if player.state == 'float' then
-		player.vy += .20 --gravity
+		player.vy += .15 --gravity
 		player.vy = mid(.6, player.vy, -100) --flesh kite
 	end
 
 	--if launched use heavier gravity.
 	if player.state == 'launch' then
-		player.vy += .20 --gravity
+		player.vy += .15 --gravity
 		player.vy = mid(3, player.vy, -100) --flesh kite
 	end
 end

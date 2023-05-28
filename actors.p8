@@ -26,9 +26,12 @@ function make_well(x,y)
         player.state = 'hold'
         player.x = w.xcen() - 8
         player.y = w.ycen() - 10
+        player.vx = 0
+        player.vy = 0
         if x_btn.is_pressed then
             player.state = 'launch'
             player.cooldown = 30
+            launch_player()
         end
     end
 

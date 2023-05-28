@@ -102,3 +102,34 @@ end
 -- 	  end
 -- 	end
 --   end
+
+function draw_circle (orig)
+ 	length = 24
+    angle = -rot
+    angle_stepsize = 0.1
+
+    -- go through all angles from 0 to 2 * PI radians
+    --while (angle < 2 * 3.14) do
+        -- calculate x, y from a vector with known length and angle
+        x = orig.xcen() + (length * cos (angle))
+        y = orig.ycen() + (length * sin (angle))
+		xv = x + (20 * cos (angle+90/360)) 
+		yv = y + (20 * sin (angle+90/360)) 
+		pset(x, y, 10)
+        --angle += angle_stepsize;
+		pset(xv, yv, 9)
+	--end
+end
+
+function launch_player()
+	length = 24
+	local x = player.xcen() + (length * cos (-rot))
+	local y = player.ycen() + (length * sin (-rot))
+	local vx = 20 * cos (-rot+90/360)
+	local vy = 20 * sin (-rot+90/360)
+
+	player.x = x
+	player.y = y
+	player.vx = vx/2.8
+	player.vy = vy/2.8
+end
