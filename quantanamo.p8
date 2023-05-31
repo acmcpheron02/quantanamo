@@ -23,6 +23,7 @@ function title_init() --156 x min, 520 x max,
 	make_player(338, 620)
 	make_camera(184, 620)
 	title_i = 1
+	y_tran = 0
 end
 
 function stage1_init()
@@ -47,7 +48,9 @@ function title_update()
 	if flr(title_i) > #ani then title_i = 1 end
 	apply_forces()
 	update_p_state()
-	title_cam()
+	if gamestate == 'title' then
+		title_cam()
+	end
 	if x_btn.is_pressed then
 		gamestate = 'transition'
 	end
@@ -55,7 +58,17 @@ end
 
 function transition_update()
 	title_update()
-	follow_player()
+	y_tran += 0.1
+	y_tran *= 1.05
+	if y_tran <= 128 then
+		title_cam()
+	end
+	if y_tran > 128 then
+		transition_cam()
+	end
+	if y_tran > 524 then
+		gamestate = 'stage1'
+	end
 end
 
 function stage1_update()
@@ -81,19 +94,19 @@ end
 
 function title_draw()
 	stage1_draw()
-	print('rad', cam.x + 10, cam.y + 17, 3)
-	print('rad', cam.x + 9, cam.y + 18, 14)
-	print('ricki', cam.x + 18, cam.y + 27, 3)
-	print('ricki', cam.x + 17, cam.y + 28, 14)
-	spr(058, cam.x + 32, cam.y + 42)
-	print('escape', cam.x + 16, cam.y + 57, 10)
-	print('escape', cam.x + 15, cam.y + 58, 14)
-	print('from', cam.x + 21, cam.y + 67, 10)
-	print('from', cam.x + 20, cam.y + 68, 14)
-	print('quantanamo!', cam.x + 16, cam.y + 77, 10)
-	print('quantanamo!', cam.x + 15, cam.y + 78, 14)
-	print('press x to start', cam.x + 5, cam.y + 100, 3)
-	print('press x to start', cam.x + 4, cam.y + 101, 14)
+	print('rad', cam.x + 10, cam.y + 17 + y_tran, 3)
+	print('rad', cam.x + 9, cam.y + 18 + y_tran, 14)
+	print('ricki', cam.x + 18, cam.y + 27 + y_tran, 3)
+	print('ricki', cam.x + 17, cam.y + 28 + y_tran, 14)
+	spr(058, cam.x + 32, cam.y + 42 + y_tran)
+	print('escape', cam.x + 16, cam.y + 57 + y_tran, 10)
+	print('escape', cam.x + 15, cam.y + 58 + y_tran, 14)
+	print('from', cam.x + 21, cam.y + 67 + y_tran, 10)
+	print('from', cam.x + 20, cam.y + 68 + y_tran, 14)
+	print('quantanamo!', cam.x + 16, cam.y + 77 + y_tran, 10)
+	print('quantanamo!', cam.x + 15, cam.y + 78 + y_tran, 14)
+	print('press x to start', cam.x + 5, cam.y + 100 + y_tran, 3)
+	print('press x to start', cam.x + 4, cam.y + 101 + y_tran, 14)
 end
 
 function stage1_draw()
@@ -105,11 +118,7 @@ function stage1_draw()
 end
 
 function transition_draw()
-	--cls(12)
-	cam.draw_camera()
-	map( 3, 0, cam.x/3, cam.y/3, 1024, 512)
-	foreach(wells, draw_well)
-	player.draw()
+	title_draw()
 end
 
 __gfx__

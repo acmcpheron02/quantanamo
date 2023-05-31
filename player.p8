@@ -54,7 +54,6 @@ function make_player(x,y)
 			sspr(56, 0, 16, 16, player.x, player.y+4, 16, 16, player.xflipped) 
 		end
 		if player.direction == 'side' and player.state == 'float' then
-			print('we are here', cam.x+ 12, cam.y + 12)
 			sspr(24, 16, 16, 16, player.x, player.y+3, 16, 16, player.xflipped) 
 		end
 		if player.state == 'launch' then

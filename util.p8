@@ -71,6 +71,11 @@ function make_camera(x, y)
 		cam.y = (cam.y*15 + player.y-68)/16 
 	end
 
+	function transition_cam()
+		cam.x = (cam.x*20 + player.x-58)/21
+		cam.y = (cam.y*20 + player.y-90)/21
+	end
+
 	function title_cam()
 		cam.x = 248
 		cam.y = player.y - 32
