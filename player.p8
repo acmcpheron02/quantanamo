@@ -34,13 +34,13 @@ function make_player(x,y)
 	function player.draw()
 
 		--player shadow
-		ovalfill(player.x+15, player.y+12, player.x+22, player.y+25, 5) --body
-		ovalfill(player.x+16, player.y+7, player.x+21, player.y+11, 5) --head
-		local tailRot
-		tailRot = (player.vx * 20) / 360
-		if player.state != 'hold' then
-			pd_rotate(player.x+18.3, player.y+21, tailRot, 0.5, 27, 4, false, .8)
-		end
+		-- ovalfill(player.x+15, player.y+12, player.x+22, player.y+25, 5) --body
+		-- ovalfill(player.x+16, player.y+7, player.x+21, player.y+11, 5) --head
+		-- local tailRot
+		-- tailRot = (player.vx * 20) / 360
+		-- if player.state != 'hold' then
+		-- 	pd_rotate(player.x+18.3, player.y+21, tailRot, 0.5, 27, 4, false, .8)
+		-- end
 
 		--tail controls --84, 44
 		local tailRot
