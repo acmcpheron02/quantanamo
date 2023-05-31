@@ -71,6 +71,11 @@ function make_camera(x, y)
 		cam.y = (cam.y*15 + player.y-68)/16 
 	end
 
+	function title_cam()
+		cam.x = 248
+		cam.y = player.y - 32
+	end
+
 	function cam.draw_camera()
 		camera(cam.x, cam.y)
 	end

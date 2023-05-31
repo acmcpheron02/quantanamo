@@ -12,7 +12,7 @@ function make_player(x,y)
 	player.vx = 0
 	player.vy = 0
 	player.xflipped = false
-	player.state = 'float'
+	player.state = 'launch'
 	player.direction = 'side'
 	player.cooldown = 0
 
@@ -32,14 +32,20 @@ function make_player(x,y)
 	end
 
 	function player.draw()
-		--tail controls --84, 44
-		--sspr(41, 4, 6, 12, player.x+5, player.y+13, 6, 12, false)
+
+		--player shadow
+		ovalfill(player.x+15, player.y+12, player.x+22, player.y+25, 5) --body
+		ovalfill(player.x+16, player.y+7, player.x+21, player.y+11, 5) --head
 		local tailRot
 		tailRot = (player.vx * 20) / 360
 		if player.state != 'hold' then
-			print(tailRot, cam.x + 8, cam.y + 8)
-			print(player.vx, cam.x + 8, cam.y + 16)
-			print(player.dx, cam.x + 8, cam.y + 24)
+			pd_rotate(player.x+18.3, player.y+21, tailRot, 0.5, 27, 4, false, .8)
+		end
+
+		--tail controls --84, 44
+		local tailRot
+		tailRot = (player.vx * 20) / 360
+		if player.state != 'hold' then
 			pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1)
 		end
 
@@ -48,6 +54,7 @@ function make_player(x,y)
 			sspr(56, 0, 16, 16, player.x, player.y+4, 16, 16, player.xflipped) 
 		end
 		if player.direction == 'side' and player.state == 'float' then
+			print('we are here', cam.x+ 12, cam.y + 12)
 			sspr(24, 16, 16, 16, player.x, player.y+3, 16, 16, player.xflipped) 
 		end
 		if player.state == 'launch' then
@@ -69,6 +76,7 @@ function make_player(x,y)
 				sspr(48, 8, 8, 8, player.x+4, player.y, 8, 8, headxflip)
 			end
 		end
+
 	end
 
 	return 
