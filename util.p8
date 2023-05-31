@@ -54,16 +54,21 @@ function make_camera(x, y)
 	cam.y = y
 
 	function follow_player()
-	local bounds = 32
+	local bounds = 20
     local offset = 64
     --right bounds
     if (player.x+player.w-offset > cam.x + bounds) then cam.x = flr(player.x) + player.w - offset - bounds end
     --left bounds
     if (player.x-offset < cam.x - bounds) then cam.x = flr(player.x) - offset + bounds end
     --lower bounds
-    if (player.y+player.h-offset > cam.y + bounds/1.5) then cam.y = flr(player.y) + player.h - offset - bounds/1.5 end
+    if (player.y+player.h-offset > cam.y + bounds) then cam.y = flr(player.y) + player.h - offset - bounds end
     --upper bounds
-    if (player.y-offset < cam.y - bounds/1.5) then cam.y = flr(player.y) - offset + bounds/1.5 end
+    if (player.y-offset < cam.y - bounds) then cam.y = flr(player.y) - offset + bounds end
+	end
+
+	function center_well(w)
+		cam.x = (cam.x*15 + player.x-58)/16
+		cam.y = (cam.y*15 + player.y-68)/16 
 	end
 
 	function cam.draw_camera()
@@ -86,9 +91,9 @@ function collisions()
 	if colldist <= 16 then
 		hold_well(w)
 	end
-	if colldist > 16 and colldist < 50 then
-		player.vx += sgn(xdist) * 0.1 
-		player.vy += sgn(ydist) * 0.1
+	if colldist > 16 and colldist < 64 then
+		player.vx += sgn(xdist) * 0.03 
+		player.vy += sgn(ydist) * 0.03
 	end
 end
   

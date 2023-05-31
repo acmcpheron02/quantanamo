@@ -32,6 +32,7 @@ function make_well(x,y)
             player.state = 'launch'
             player.cooldown = 30
             launch_player()
+            
         end
     end
 
