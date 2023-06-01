@@ -87,36 +87,48 @@ function make_camera(x, y)
 end
 
 
-function collisions()
+function well_collisions()
 	for w in all(wells) do
-	 well_collide(w)
+		well_collide(w)
 	end
   end
   
   function well_collide(w)
 	xdist = w.xcen() - player.xcen()
 	ydist = w.ycen() - player.ycen()
-	collide = false
 	colldist = sqrt(xdist * 0x0.0001 * xdist + ydist * 0x0.0001 * ydist) * 0x100
 	if colldist <= 16 then
 		hold_well(w)
 	end
-	if colldist > 16 and colldist < 64 then
-		player.vx += sgn(xdist) * 0.03 
-		player.vy += sgn(ydist) * 0.03
+	if colldist > 16 and colldist < 36 then
+		player.vx += sgn(xdist) * 0.04 
+		player.vy += sgn(ydist) * 0.04
 	end
 end
-  
---   function collide_event(a1, a2)
--- 	if(a1.kind=="player") and (a2.kind!="player") and a1.hurt == 0 then
--- 	  if a1.mass >= a2.eatreq then
--- 		attach(a1,a2)
--- 	  end
--- 	  if a1.mass < a2.eatreq then
--- 		a1.damage()
--- 	  end
--- 	end
---   end
+
+function qcorn_collisions()
+	for q in all(qcorns) do
+		qcorn_collide(q)
+	end
+  end
+
+function qcorn_collide(q)
+	xdist = q.xcen() - player.xcen()
+	ydist = q.ycen() - player.ycen()
+	tun_colldist = sqrt(xdist * 0x0.0001 * xdist + ydist * 0x0.0001 * ydist) * 0x100
+	if tun_colldist <= 10 then
+		del(qcorns, q)
+	end
+end
+
+function tunnel_collide()
+	xdist = tunnel.xcen() - player.xcen()
+	ydist = tunnel.ycen() - player.ycen()
+	colldist = sqrt(xdist * 0x0.0001 * xdist + ydist * 0x0.0001 * ydist) * 0x100
+	if colldist <= 10 then
+		gamestate = 'win'
+	end
+end
 
 function draw_circle (orig)
  	length = 24
