@@ -17,11 +17,6 @@ function make_well(x,y)
         return w.y + w.h/2
     end 
 
-    function draw_well()
-        sspr(24, 0, 16, 16, w.x, w.y, 32, 32) --64, 94
-        pd_rotate(w.x+16, w.y+16, rot, 1, 1, 3, false, 2) --80, 110
-    end
-
     function hold_well(w)
         player.state = 'hold'
         player.x = w.xcen() - 8
@@ -34,6 +29,11 @@ function make_well(x,y)
             launch_player()
             
         end
+    end
+
+    function draw_well(w)
+        sspr(24, 0, 16, 16, w.x, w.y, 32, 32) --64, 94
+        pd_rotate(w.x+16, w.y+16, rot, 1, 1, 3, false, 2) --80, 110
     end
 
     add(wells, w)

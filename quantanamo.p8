@@ -24,10 +24,12 @@ function title_init() --156 x min, 520 x max,
 	make_camera(184, 620)
 	title_i = 1
 	y_tran = 0
+	y_restart = false
 end
 
 function stage1_init()
-  make_well(300, 400)
+  make_well(300, 500)
+  make_well(360, 400)
 end
 
 function _update60()
@@ -35,13 +37,13 @@ function _update60()
 	x_btn:update()
 
 	if gamestate == 'title' then title_update() end
-	if gamestate == 'stage1' then stage1_update() end
 	if gamestate == 'transition' then transition_update() end
+	if gamestate == 'stage1' then stage1_update() end
 end
 
 function title_update()
 	player.vy = -2
-	if player.y <= 80 then player.y = 620 end
+	if player.y <= 510 and gamestate == 'title' then player.y = 620 end
 	local ani = {-1, -2, -1, 0, 1, 2, 1, 0}
 	player.vx = ani[flr(title_i)]/6
 	title_i += .08
@@ -57,17 +59,30 @@ function title_update()
 end
 
 function transition_update()
-	title_update()
 	y_tran += 0.1
-	y_tran *= 1.05
+	y_tran *= 1.03
 	if y_tran <= 128 then
 		title_cam()
+		title_update()
 	end
 	if y_tran > 128 then
 		transition_cam()
+		title_update()
 	end
-	if y_tran > 524 then
-		gamestate = 'stage1'
+	if y_tran > 1024 and player.y%24 == 6 then 
+		if y_restart == false then
+			player.y = 620
+			cam.y = 572
+			cam.x = player.x -58
+			stage1_init()
+			y_restart = true
+		end
+		y_tran = 1025
+		follow_player()
+		apply_forces()
+		if player.y < 450 and y_restart == true then
+			gamestate = 'stage1'
+		end
 	end
 end
 
@@ -88,8 +103,11 @@ end
 
 function _draw()
 	if gamestate == 'title' then title_draw() end
-	if gamestate == 'stage1' then stage1_draw() end
 	if gamestate == 'transition' then transition_draw() end
+	if gamestate == 'stage1' then stage1_draw() end
+	-- print(player.y, cam.x + 80, cam.y + 20, 7)
+	-- print(gamestate, cam.x + 80, cam.y + 30, 7)
+	-- print(y_restart, cam.x + 80, cam.y + 40, 7)
 end
 
 function title_draw()
@@ -113,7 +131,9 @@ function stage1_draw()
 	cls(12)
 	cam.draw_camera()
 	map( 3, 0, cam.x/3, cam.y/3, 1024, 512)
-	foreach(wells, draw_well)
+	for w in all(wells) do
+		draw_well(w)
+	end
 	player.draw()
 end
 
