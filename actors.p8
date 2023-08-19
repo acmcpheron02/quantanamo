@@ -4,6 +4,7 @@ __lua__
 
 wells = {}
 qcorns = {}
+well_sound = 0
 
 function make_well(x,y)
     local w = {}
@@ -24,6 +25,10 @@ function make_well(x,y)
     end
 
     function hold_well(w)
+        if well_sound == 0 then
+            sfx(10)
+            well_sound = 1
+        end
         player.state = 'hold'
         player.x = w.xcen() - 8
         player.y = w.ycen() - 10
@@ -58,6 +63,20 @@ function make_qcorn(x,y)
     end
 
     add(qcorns, q)
+end
+
+function draw_borders()
+    for x = maplimits[1], maplimits[3] do
+        spr(042, x*8, maplimits[2]*8)
+    end
+    for y = maplimits[2], maplimits[4] do
+        spr(042, (maplimits[1]-.5)*8, y*8)
+        spr(042, maplimits[3]*8, y*8)
+    end
+    for xwave = 0,2048, 16 do
+        sspr(88,16,16,16, xwave, maplimits[4]*8)
+    end
+    rectfill(0, maplimits[4]*8+16, 2048, 2048, 5)
 end
 
 function make_tunnel(x,y)

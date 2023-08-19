@@ -46,7 +46,7 @@ function make_player(x,y)
 		local tailRot
 		tailRot = (player.vx * 20) / 360
 		if player.state != 'hold' then
-			pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1)
+			pd_rotate(player.x+8, player.y+11, tailRot, 0.5, 21, 4, false, 1) 
 		end
 
 		--body controls --80, 30
@@ -61,6 +61,7 @@ function make_player(x,y)
 		end
 		if player.state == 'hold' then
 			pd_rotate(player.x+8, player.y+8, rot, 2.5, 10, 10, false, 1)
+			
 		end
 
 		--head controls --84, 26
@@ -117,6 +118,11 @@ end
 function apply_forces()
 	player.x += player.vx
 	player.y += player.vy
+	
+	--map bounds
+	if player.x < maplimits[1]*8 then 
+		player.vx = 0
+		player.x = maplimits[1]*8 end
 end
 
 function update_p_state()

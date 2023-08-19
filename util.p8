@@ -100,10 +100,10 @@ function well_collisions()
 	if colldist <= 16 then
 		hold_well(w)
 	end
-	if colldist > 16 and colldist < 36 then
-		player.vx += sgn(xdist) * 0.04 
-		player.vy += sgn(ydist) * 0.04
-	end
+	-- if colldist > 16 and colldist < 36 then
+	-- 	player.vx += sgn(xdist) * 0.04 
+	-- 	player.vy += sgn(ydist) * 0.04
+	-- end
 end
 
 function qcorn_collisions()
@@ -117,6 +117,7 @@ function qcorn_collide(q)
 	ydist = q.ycen() - player.ycen()
 	tun_colldist = sqrt(xdist * 0x0.0001 * xdist + ydist * 0x0.0001 * ydist) * 0x100
 	if tun_colldist <= 10 then
+		sfx(13)
 		del(qcorns, q)
 	end
 end
@@ -149,6 +150,9 @@ function draw_circle (orig)
 end
 
 function launch_player()
+	well_sound = 0
+	sfx(10, -2)
+	sfx(12)
 	length = 24
 	local x = player.xcen() + (length * cos (-rot))
 	local y = player.ycen() + (length * sin (-rot))
