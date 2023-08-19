@@ -78,7 +78,7 @@ function make_camera(x, y)
 
 	function title_cam()
 		cam.x = 248
-		cam.y = player.y - 32
+		cam.y = player.y - 24
 	end
 
 	function cam.draw_camera()

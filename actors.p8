@@ -66,17 +66,17 @@ function make_qcorn(x,y)
 end
 
 function draw_borders()
-    for x = maplimits[1], maplimits[3] do
-        spr(042, x*8, maplimits[2]*8)
-    end
-    for y = maplimits[2], maplimits[4] do
+    for y = maplimits[2], maplimits[4]+1 do
         spr(042, (maplimits[1]-.5)*8, y*8)
-        spr(042, maplimits[3]*8, y*8)
-    end
-    for xwave = 0,2048, 16 do
-        sspr(88,16,16,16, xwave, maplimits[4]*8)
+        spr(042, (maplimits[3]+1.5)*8, y*8)
     end
     rectfill(0, maplimits[4]*8+16, 2048, 2048, 5)
+    for xwave = 0,2048, 16 do
+        sspr(88,16,16,16, xwave + rot*2, (maplimits[4]*8) + rot*2)
+    end
+    for x = maplimits[1], maplimits[3] do
+        spr(042, x*8, (maplimits[2]-.5)*8)
+    end
 end
 
 function make_tunnel(x,y)

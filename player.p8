@@ -28,19 +28,9 @@ function make_player(x,y)
 		calc_forces()
 		apply_forces()
 		update_p_state()
-
 	end
 
 	function player.draw()
-
-		--player shadow
-		-- ovalfill(player.x+15, player.y+12, player.x+22, player.y+25, 5) --body
-		-- ovalfill(player.x+16, player.y+7, player.x+21, player.y+11, 5) --head
-		-- local tailRot
-		-- tailRot = (player.vx * 20) / 360
-		-- if player.state != 'hold' then
-		-- 	pd_rotate(player.x+18.3, player.y+21, tailRot, 0.5, 27, 4, false, .8)
-		-- end
 
 		--tail controls --84, 44
 		local tailRot
@@ -61,7 +51,6 @@ function make_player(x,y)
 		end
 		if player.state == 'hold' then
 			pd_rotate(player.x+8, player.y+8, rot, 2.5, 10, 10, false, 1)
-			
 		end
 
 		--head controls --84, 26
@@ -90,10 +79,6 @@ function move_player()
 	if player.state == 'launch' then
 		player.vx += player.dx/50
 	end
-	-- if x_btn.is_pressed == true then
-	-- 	player.vy -= 8.5
-	-- 	player.state = 'launch'
-	-- end
 end
 
 function calc_forces()
@@ -105,13 +90,13 @@ function calc_forces()
 	--if floating, reduce maximum gravity effect 
 	if player.state == 'float' then
 		player.vy += .15 --gravity
-		player.vy = mid(.6, player.vy, -100) --flesh kite
+		player.vy = mid(.6, player.vy, -100)
 	end
 
 	--if launched use heavier gravity.
 	if player.state == 'launch' then
 		player.vy += .15 --gravity
-		player.vy = mid(3, player.vy, -100) --flesh kite
+		player.vy = mid(3, player.vy, -100)
 	end
 end
 	
@@ -123,6 +108,13 @@ function apply_forces()
 	if player.x < maplimits[1]*8 then 
 		player.vx = 0
 		player.x = maplimits[1]*8 end
+
+	if player.x > maplimits[3]*8 then 
+		player.vx = 0
+		player.x = maplimits[3]*8 end
+		
+	if player.y < maplimits[2]*8 then 
+		player.y = maplimits[2]*8 end
 end
 
 function update_p_state()
